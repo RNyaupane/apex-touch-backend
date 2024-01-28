@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User } = require('../../../models');
 const cacheUtil = require('../utils/cache.util');
 
 exports.createUser = (user) => {

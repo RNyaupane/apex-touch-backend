@@ -1,5 +1,5 @@
 const AuthService = require('../services/auth.service');
-const jwtConfig = require('../config/jwt.config');
+const jwtConfig = require('../../../config/jwt.config');
 const bcryptUtil = require('../utils/bcrypt.util');
 const jwtUtil = require('../utils/jwt.util');
 
@@ -31,10 +31,21 @@ exports.login = async (req, res) => {
         const isMatched = await bcryptUtil.compareHash(req.body.password, user.password);
         if (isMatched) {
             const token = await jwtUtil.createToken({ id: user.id });
+            const userData = await AuthService.findUserById(user.id);
+           
             return res.json({
+                message: "Login Success",
                 access_token: token,
                 token_type: 'Bearer',
-                expires_in: jwtConfig.ttl
+                expires_in: jwtConfig.ttl,
+                user : {
+                    id : userData.id,
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    fullname: userData.firstName+' '+ userData.lastName,
+                    email: userData.email,
+                    phone: userData.phone
+                }
             });
         }
     }
