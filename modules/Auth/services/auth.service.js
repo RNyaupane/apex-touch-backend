@@ -12,6 +12,21 @@ exports.findUserByEmail = (email) => {
         }
     })
 }
+exports.verifyOtpByEmail = (email) => {
+    return User.update({ is_mail_verified: true }, {
+        where : {
+            email: email,
+        },
+    });
+}
+
+exports.updatePasswordById = (id, new_password) => {
+    return User.update({ password: new_password }, {
+        where : {
+            id: id,
+        },
+    });
+}
 
 exports.findUserById = (id) => {
     return User.findByPk(id);

@@ -24,6 +24,13 @@ module.exports = {
       phone: {
         type: Sequelize.STRING
       },
+      otpCode: {
+        type: Sequelize.INTEGER
+      },
+      is_mail_verified: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       is_active: {
         type: Sequelize.BOOLEAN,
         defaultValue: true

@@ -19,10 +19,16 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     phone: DataTypes.STRING,
+    otpCode: DataTypes.INTEGER,
+    is_mail_verified:{
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull:false
+    },
     is_active:{
       type: DataTypes.BOOLEAN,
       defaultValue: true,
-      allowNull:true
+      allowNull:false
     },
     role : {
       type : DataTypes.ENUM,

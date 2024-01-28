@@ -18,5 +18,9 @@ module.exports = {
     login: Joi.object().keys({
         email: Joi.string().email().required(),
         password: Joi.string().required()
+    }),
+    changePassword: Joi.object().keys({
+        password: Joi.string().required(),
+        new_password: Joi.string().min(8).max(16).required().external(validatePassword)
     })
 }

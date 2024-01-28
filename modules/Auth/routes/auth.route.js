@@ -9,6 +9,8 @@ const validate = require('../utils/validator.util');
 
 router.post('/register', validate(schema.register), ErrorHandler(AuthController.register));
 router.post('/login',    validate(schema.login),    ErrorHandler(AuthController.login));
+router.post('/otp-verification', ErrorHandler(AuthController.otpVerification));
+router.post('/change-password',  AuthGuard,   validate(schema.changePassword),     ErrorHandler(AuthController.changePassword));
 router.get('/user',      AuthGuard,                 ErrorHandler(AuthController.getUser));
 router.get('/logout',    AuthGuard,                 ErrorHandler(AuthController.logout));
 
