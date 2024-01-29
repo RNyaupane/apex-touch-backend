@@ -22,5 +22,12 @@ module.exports = {
     changePassword: Joi.object().keys({
         password: Joi.string().required(),
         new_password: Joi.string().min(8).max(16).required().external(validatePassword)
+    }),
+    resetPassword: Joi.object().keys({
+        password: Joi.string().min(8).max(16).required().external(validatePassword),
+        password_confirmation: Joi.any().equal(Joi.ref('password'))
+        .required()
+        .label('Confirm password')
+        .options({ messages: { 'any.only': '{{#label}} does not match'} })
     })
 }

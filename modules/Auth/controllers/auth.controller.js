@@ -108,6 +108,36 @@ exports.changePassword = async (req, res) => {
 
 }
 
+exports.sendUserPasswordResetEmail = async(req,res) => {
+    const user = await AuthService.findUserByEmail(req.body.email);
+    const token = await jwtUtil.createToken({ id:user.id});
+    const link = `http://localhost:8000/api/auth/reset/${user.id}/${token}`;
+    await mailSender.resetLinkMail(user.email, link);
+    
+    return res.status(200).json({
+        status: true,
+        message: "password reset link send successfully!!"
+    });
+}
+
+exports.updateResetPassword = async(req,res) => {
+    const { id, token } = req.params;
+    if(id && token){
+        const is_valid_token = await jwtUtil.verifyToken(token);
+        if(is_valid_token){
+            const new_hash_password = await bcryptUtil.createHash(req.body.password);
+            await AuthService.updatePasswordById(id,new_hash_password);
+        }
+    }else{
+        console.log('both is required');
+    }
+
+    res.status(200).json({
+        message: "password reset Successfylly!!!",
+    });
+}
+
+
 exports.getUser = async (req, res) => {
     const user = await AuthService.findUserById(req.user.id);
     return res.json({

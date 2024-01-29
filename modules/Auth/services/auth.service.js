@@ -28,6 +28,14 @@ exports.updatePasswordById = (id, new_password) => {
     });
 }
 
+exports.updateResetPasswordById = (id, new_hash_password) => {
+    return User.update({ password: new_hash_password }, {
+        where : {
+            id: id
+        }
+    });
+}
+
 exports.findUserById = (id) => {
     return User.findByPk(id);
 }
